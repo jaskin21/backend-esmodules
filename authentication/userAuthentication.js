@@ -7,6 +7,7 @@ import {
 } from '../validation/userValidation.js';
 import errorResponseFactory from '../utils/errorResponseFactory.js';
 import responseFactory from '../utils/responseFactory.js';
+import signToken from '../utils/signToken.js';
 
 const debug = debugLib('sernver:user-controller');
 
@@ -78,15 +79,11 @@ export const loginUser = async (req, res) => {
   }
 
   try {
-    // // Create and assign a token
-    // const { _id, username, email } = searchUser;
-    // const token = signToken(_id, username, email);
+    // Create and assign a token
+    const { _id, username, email } = searchUser;
+    const token = signToken(_id, username, email);
 
-    return responseFactory(
-      res,
-      200
-      // , { token }
-    );
+    return responseFactory(res, 200, { token });
   } catch (err) {
     return errorResponseFactory(
       res,
